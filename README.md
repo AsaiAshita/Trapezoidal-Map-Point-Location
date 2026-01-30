@@ -1,5 +1,6 @@
 # Trapezoidal-Map-Point-Location
 A Python implementation of the randomized incremental point location algorithm based on a trapezoidal map, based on the *Computational Geometry: Algorithms and Applications* book written by Mark Berg, Marc Kreveld, Mark Overmars and Otfried Schwarzkopf and on the teachings offered by the *Spatial Databases* course.  
+
 The following repository contains 2 versions of the algorithm:  
  - a version that works under general position
  - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate and query points to be found on vertical lines, the two premises discussed in the reference book *Computational Geometry: Algorithms and Applications*)
