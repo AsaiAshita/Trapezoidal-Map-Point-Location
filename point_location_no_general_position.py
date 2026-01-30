@@ -1,10 +1,5 @@
 #ASSUMPTION
 #no endpoints on bounding box, may break the algorithm
-#NOTES:
-#Some specific inputs (in particular, when a node with neighbours that do not share its top or bottom and we add a segment that traverses it and one of its neighbours)
-#result in algorithmically and formally correct solutions (in the sense that the algorithm behaves as it should) but that are technically incorrect
-#If you want to see what I mean, modify the segment ((-9,0),(3,0)) with a higher x value for the second point
-#Those cases need to be handled manually and without using the classic neighbour traversing mechanic that general position point location algorithms based on trapezoidla maps use
 
 import random
 import matplotlib.pyplot as plt
@@ -240,17 +235,33 @@ class TrapezoidalMap:
         trap = self.locate_trapezoid(segment.p, segment.q)
         trapezoids.append(trap)
         j = 0
-        while j < len(trapezoids) and segment.q.x > trapezoids[j].rightp.x:
+        while (j < len(trapezoids) and segment.q.x > trapezoids[j].rightp.x):
             if(segment.above_query(trapezoids[j].rightp)):
                 if trapezoids[j].lower_right_neighbour is not None:
                     print("HELLO")
                     trapezoids.append(trapezoids[j].lower_right_neighbour)
                     print(trapezoids[j].lower_right_neighbour.id)
+                else:
+                    #trapezoid with no neigbours, due to the fact there may be an existing trapezoid near it that is not its neighbour by definition (different top or bottom),
+                    #we need to check whether there at least exist a trapezoid that contains the trapezoids right point. If there is, we need to visit it.
+                    #Otherwise, we don't need to do anything.
+                    #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.
+                    if segment.q.x > trapezoids[j].rightp.x:
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trapezoids.append(trap)
             else:
                 if trapezoids[j].upper_right_neighbour is not None:
                     print("SPAZIBA")
                     trapezoids.append(trapezoids[j].upper_right_neighbour)
                     print(trapezoids[j].upper_right_neighbour.id)
+                else:
+                    #trapezoid with no neigbours, due to the fact there may be an existing trapezoid near it that is not its neighbour by definition (different top or bottom),
+                    #we need to check whether there at least exist a trapezoid that contains the trapezoids right point. If there is, we need to visit it.
+                    #Otherwise, we don't need to do anything.
+                    #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.                    
+                    if segment.q.x > trapezoids[j].rightp.x:
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trapezoids.append(trap)
             j += 1
         return trapezoids
 
@@ -370,8 +381,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_left_neighbour.lower_right_neighbour = trap_A
                         if trapezoids[0].lower_left_neighbour.top.equals(trap_A.top):
                             trapezoids[0].lower_left_neighbour.upper_right_neighbour = trap_A
-                        if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
-                            trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A                        
+                    if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
+                        trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A                        
                 #if there exist a right remainder...
                 if trap_B is not None:
                     #...and it is not vertical...
@@ -393,8 +404,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_right_neighbour.lower_left_neighbour = trap_B
                         if trapezoids[0].lower_right_neighbour.top.equals(trap_B.top):
                             trapezoids[0].lower_right_neighbour.upper_left_neighbour = trap_B 
-                        if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
-                            trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B                           
+                    if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
+                        trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B                           
                 #if an above and below trapezoids exist...
                 if trap_C is not None and trap_D is not None:
                     #...and there is a left remainder...
@@ -905,7 +916,7 @@ def main():
     #we declare the segments we want to insert
     #segments = [Segment(Point(-9,0), Point(9,0)), Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9, -4), Point(-9, -7)), Segment(Point(9,-5), Point(9,-2))]
     #segments = [Segment(Point(-9, -4), Point(-9, -7)), Segment(Point(-9,0), Point(3,-7)), Segment(Point(9,-5), Point(9,-2)), Segment(Point(-9,0), Point(9,0)), Segment(Point(0,-1), Point(9.7, -8))]
-    segments = [Segment(Point(-9,1), Point(-9,4)), Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9,0), Point(3,7)), Segment(Point(4,7), Point(9,0)), Segment(Point(3,-7), Point(9,0)), Segment(Point(-9,0), Point(3,0)), Segment(Point(9,-3), Point(9,-8))]
+    segments = [Segment(Point(-9,1), Point(-9,4)), Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9,0), Point(3,7)), Segment(Point(4,7), Point(9,0)), Segment(Point(3,-7), Point(9,0)), Segment(Point(-9,0), Point(6,0)), Segment(Point(9,-3), Point(9,-8))]
     #we randomize them - after all, this is a randomized incremental algorithm
     random.shuffle(segments)
     #we initialize the trapezoidal map

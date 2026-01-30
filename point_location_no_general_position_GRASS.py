@@ -273,17 +273,33 @@ class TrapezoidalMap:
         trap = self.locate_trapezoid(segment.p, segment.q)
         trapezoids.append(trap)
         j = 0
-        while j < len(trapezoids) and segment.q.x > trapezoids[j].rightp.x:
+        while (j < len(trapezoids) and segment.q.x > trapezoids[j].rightp.x):
             if(segment.above_query(trapezoids[j].rightp)):
                 if trapezoids[j].lower_right_neighbour is not None:
                     print("HELLO")
                     trapezoids.append(trapezoids[j].lower_right_neighbour)
                     print(trapezoids[j].lower_right_neighbour.id)
+                else:
+                    #trapezoid with no neigbours, due to the fact there may be an existing trapezoid near it that is not its neighbour by definition (different top or bottom),
+                    #we need to check whether there at least exist a trapezoid that contains the trapezoids right point. If there is, we need to visit it.
+                    #Otherwise, we don't need to do anything.
+                    #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.
+                    if segment.q.x > trapezoids[j].rightp.x:
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trapezoids.append(trap)
             else:
                 if trapezoids[j].upper_right_neighbour is not None:
                     print("SPAZIBA")
                     trapezoids.append(trapezoids[j].upper_right_neighbour)
                     print(trapezoids[j].upper_right_neighbour.id)
+                else:
+                    #trapezoid with no neigbours, due to the fact there may be an existing trapezoid near it that is not its neighbour by definition (different top or bottom),
+                    #we need to check whether there at least exist a trapezoid that contains the trapezoids right point. If there is, we need to visit it.
+                    #Otherwise, we don't need to do anything.
+                    #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.                    
+                    if segment.q.x > trapezoids[j].rightp.x:
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trapezoids.append(trap)
             j += 1
         return trapezoids
 
@@ -403,8 +419,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_left_neighbour.lower_right_neighbour = trap_A
                         if trapezoids[0].lower_left_neighbour.top.equals(trap_A.top):
                             trapezoids[0].lower_left_neighbour.upper_right_neighbour = trap_A
-                        if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
-                            trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A                        
+                    if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
+                        trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A                        
                 #if there exist a right remainder...
                 if trap_B is not None:
                     #...and it is not vertical...
@@ -426,8 +442,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_right_neighbour.lower_left_neighbour = trap_B
                         if trapezoids[0].lower_right_neighbour.top.equals(trap_B.top):
                             trapezoids[0].lower_right_neighbour.upper_left_neighbour = trap_B 
-                        if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
-                            trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B                           
+                    if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
+                        trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B                           
                 #if an above and below trapezoids exist...
                 if trap_C is not None and trap_D is not None:
                     #...and there is a left remainder...
@@ -940,7 +956,7 @@ def main():
     points_to_test = random_point(xmin, xmax, ymin, ymax)
     #we randomize them - after all, this is a randomized incremental algorithm
     random.shuffle(segments)
-    #we initialize the trapezoidal map
+    #we initialize the trapezoidal mapcd 
     TMap = TrapezoidalMap(segments, xmin, xmax, ymin, ymax)
     #finally, we insert the segments to create the final trapezoidal map
     TMap.add_segments(segments)

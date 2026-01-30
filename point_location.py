@@ -88,24 +88,28 @@ class Trapezoid:
     def neighbour_description(self):
         print("Upper left neigbour:")
         if self.upper_left_neighbour is not None:
+            print(self.upper_left_neighbour.id)
             self.upper_left_neighbour.top.describe_itself()
             self.upper_left_neighbour.bottom.describe_itself()
         else:
             print("None")
         print("Upper right neighbour:")
         if self.upper_right_neighbour is not None:
+            print(self.upper_right_neighbour.id)
             self.upper_right_neighbour.top.describe_itself()
             self.upper_right_neighbour.bottom.describe_itself()
         else:
             print("None")
         print("Lower left neighbour:")
         if self.lower_left_neighbour is not None:
+            print(self.lower_left_neighbour.id)
             self.lower_left_neighbour.top.describe_itself()
             self.lower_left_neighbour.bottom.describe_itself()  
         else:
             print("None")
         print("Lower right neighbour:")
         if self.lower_right_neighbour is not None:
+            print(self.lower_right_neighbour.id)
             self.lower_right_neighbour.top.describe_itself()
             self.lower_right_neighbour.bottom.describe_itself()
         else:
@@ -239,7 +243,7 @@ class TrapezoidalMap:
             #we remove them from the TrapezoidalMap
             for trap in trapezoids:
                 if trap not in self.trapezoid_list: 
-                    print("ERROR: DAG returned a stale trapezoid:", trap.bottom.describe_itself(), trap.top.describe_itself(),trap.leftp.print_self(), trap.rightp.print_self()) 
+                    print("ERROR: DAG returned a stale trapezoid:", str(trap.id), trap.bottom.describe_itself(), trap.top.describe_itself(),trap.leftp.print_self(), trap.rightp.print_self()) 
                     raise RuntimeError("Stale trapezoid in DAG")
                 self.trapezoid_list.remove(trap)
             #first case: segment completely contained in a single trapezoid. This leads to at most 4 new ones being created
@@ -301,8 +305,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_left_neighbour.lower_right_neighbour = trap_A
                         if trapezoids[0].lower_left_neighbour.top.equals(trap_A.top):
                             trapezoids[0].lower_left_neighbour.upper_right_neighbour = trap_A
-                        if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
-                            trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A 
+                    if trapezoids[0].upper_left_neighbour is not None and trapezoids[0].upper_left_neighbour.top.equals(trap_A.top):
+                        trapezoids[0].upper_left_neighbour.upper_right_neighbour = trap_A 
 
                 if trap_B is not None:
                     trap_B.upper_left_neighbour = trap_C
@@ -315,8 +319,8 @@ class TrapezoidalMap:
                             trapezoids[0].lower_right_neighbour.lower_left_neighbour = trap_B
                         if trapezoids[0].lower_right_neighbour.top.equals(trap_B.top):
                             trapezoids[0].lower_right_neighbour.upper_left_neighbour = trap_B 
-                        if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
-                            trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B     
+                    if trapezoids[0].upper_right_neighbour is not None and trapezoids[0].upper_right_neighbour.top.equals(trap_B.top):
+                        trapezoids[0].upper_right_neighbour.upper_left_neighbour = trap_B     
 
                 if trap_A is not None:
                     trap_C.upper_left_neighbour = trap_A
@@ -640,10 +644,11 @@ class TrapezoidalMap:
             yt_r = T.top.y_at(xr)
             yb_l = T.bottom.y_at(xl)
             yb_r = T.bottom.y_at(xr)
-            print("BOTTOM:")
-            T.bottom.describe_itself()
-            print("TOP:")
-            T.top.describe_itself()
+            print(str(T.id))
+            #print("BOTTOM:")
+            #T.bottom.describe_itself()
+            #print("TOP:")
+            #T.top.describe_itself()
             print("NEIHBOURS")
             T.neighbour_description()
 
@@ -801,9 +806,9 @@ def main():
     #we declare the segments we want to insert
     #segments = [Segment(Point(-9,0), Point(3,-7)), Segment(Point(-6,0), Point(9,0)), Segment(Point(-8, -4), Point(-7, -7))]
     #segments = [Segment(Point(-9,9), Point(0,9)), Segment(Point(-9,9), Point(6,5)),Segment(Point(6,5), Point(9,9))]
-    segments = [Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9,0), Point(4,7)), Segment(Point(4,7), Point(9,0)), Segment(Point(3,-7), Point(9,0)), Segment(Point(-9,0), Point(9,0))]
+    segments = [Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9,0), Point(2,7)), Segment(Point(4,7), Point(9,0)), Segment(Point(3,-7), Point(9,0)), Segment(Point(-9,0), Point(9,0))]
     #we randomize them - after all, this is a randomized incremental algorithm
-    random.shuffle(segments)
+    #random.shuffle(segments)
     #we initialize the trapezoidal map
     TMap = TrapezoidalMap(segments, xmin, xmax, ymin, ymax)
     #finally, we insert the segments to create the final trapezoidal map
