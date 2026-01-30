@@ -16,5 +16,7 @@ python3 parser_GRASS.py #convert to final format for algorithm
 Note that we use Voronoi to generate the segments, this introduces a pesky bounding box that may cause problems (in theory it shouldn't, in practice it may - from the tests that I have run it should not pose a problem, but be aware of this if you actually face some issues), so try to remove it if possible. Also, depending on your map size, you will have to adjust the bounding box dimensions in the code.  
 
 Both algorithm also offer a visualization of both the trapezoidal map and its associated DAG.  
+![Example of Trapezoidal Map](/Trapezoidal_Map_Example.png)
+![Example of DAG](/DAG_Example.png)  
 
 Reference: *Mark, D. B., Otfried, C., Marc, V. K., & Mark, O. (2008). Computational geometry algorithms and applications. Spinger.*
