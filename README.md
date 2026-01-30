@@ -2,7 +2,7 @@
 A Python implementation of the randomized incremental point location algorithm based on a trapezoidal map, based on the *Computational Geometry: Algorithms and Applications* book written by Mark Berg, Marc Kreveld, Mark Overmars and Otfried Schwarzkopf and on the teachings offered by the *Spatial Databases* course.  
 The following repository contains 2 versions of the algorithm:  
  - a version that works under general position
- - a version that works without the need for the general position premise
+ - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate and query points to be found on vertical lines, the two premises discussed in the reference book *Computational Geometry: Algorithms and Applications*)
 
 The second version also has a variant that can read segments from a file (`point_location_no_general_position_GRASS.py`) and that was thought to work with data generated from GIS systems like GRASS. If you use this version, the input file is expected to be in the form `x1 y1 x2 y2`, where each line is a segment formed by points (x1,y1) and (x2,y2). If you use GRASS, you can use the `GRASS_parser.py` provided in the repository to parse data obtained from GRASS. For an example on how to use it, you can run the following commands: 
 ```
