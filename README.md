@@ -12,7 +12,8 @@ v.db.addtable map=voronoi_3 #to permit us to then turn it into an ascii file
 v.to.lines input=voronoi_3 output=segments_voronoi_3 --overwrite #convert to lines
 v.out.ascii input=segments_voronoi_3 format=standard output=segments_full.txt --overwrite #convert to ascii
 python3 parser_GRASS.py #convert to final format for algorithm
-``` - note that we use Voronoi to generate the segments, this introduces a pesky bounding box that may cause problems, so try to remove it if possible. Also, depending on your map size, you will have to adjust the bounding box dimensions in the code.  
+```
+Note that we use Voronoi to generate the segments, this introduces a pesky bounding box that may cause problems (in theory it shouldn't, in practice it may - from the tests that I have run it should not pose a problem, but be aware of this if you actually face some issues), so try to remove it if possible. Also, depending on your map size, you will have to adjust the bounding box dimensions in the code.  
 
 Both algorithm also offer a visualization of both the trapezoidal map and its associated DAG.  
 
