@@ -930,9 +930,9 @@ def main():
         if isinstance(trap,Trapezoid):
             print("Point " + str(point.x), str(point.y) + " inside trapezoid: " + str(trap.id))
         elif isinstance(trap, NodeX):
-            print("Point " + str(point.x), str(point.y) + " lies on the vertical segment originated by (" + str(trap.point.x),str(trap.point.y) + ")")
+            print("Point " + str(point.x), str(point.y) + " lies on the segment of which one endpoint is (" + str(trap.point.x),str(trap.point.y) + ")")
         elif isinstance(trap, NodeY):
-            print("Point " + str(point.x), str(point.y) + " lies on the horizontal segment originated by the following segment (("+ str(trap.segment.p.x),str(trap.segment.p.y) +"),(" + str(trap.segment.q.x),str(trap.segment.q.y) + "))")
+            print("Point " + str(point.x), str(point.y) + " lies on the the following segment (("+ str(trap.segment.p.x),str(trap.segment.p.y) +"),(" + str(trap.segment.q.x),str(trap.segment.q.y) + "))")
         else:
             raise RuntimeError("Unknown object type returned by query")
 
