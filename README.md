@@ -2,8 +2,8 @@
 A Python implementation of the randomized incremental point location algorithm based on a trapezoidal map, based on the *Computational Geometry: Algorithms and Applications* book written by Mark Berg, Marc Kreveld, Mark Overmars and Otfried Schwarzkopf and on the teachings offered by the *Spatial Databases* course.  
 
 The following repository contains 2 versions of the algorithm:  
- - a version that works under general position
- - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate and query points to be found on vertical lines, the two premises discussed in the reference book *Computational Geometry: Algorithms and Applications*)
+ - a version that works under general position + no query point on vertical line of a x-node or on the segment of a y-node (algorithm seen during lectures).
+ - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate, as discussed in the reference book *Computational Geometry: Algorithms and Applications*) + it allows query points to be found even on the vertical line of a x-node or on the segment of a y-node (as discussed in the reference book *Computational Geometry: Algorithms and Applications*) 
 
 # Requirements
 In order for the visualization part of the code to work correctly, you will need to install `matplotlib` and `networkx`. You can install them by using pip as follows:  
@@ -27,7 +27,7 @@ python3 parser_GRASS.py #convert to final format for algorithm
 ```
 Note that we use Voronoi to generate the segments, this introduces a pesky bounding box that may cause problems (in theory it shouldn't, in practice it may - from the tests that I have run it should not pose a problem, but be aware of this if you actually face some issues), so try to remove it if possible. Also, depending on your map size, you will have to adjust the bounding box dimensions in the code.  
 
-Both algorithm also offer a visualization of both the trapezoidal map and its associated DAG.  
+Both algorithms also offer a visualization of both the trapezoidal map and its associated DAG.  
 ![Example of Trapezoidal Map](/Trapezoidal_Map_Example.png)
 ![Example of DAG](/DAG_Example.png)  
 
