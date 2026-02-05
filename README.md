@@ -2,8 +2,8 @@
 A Python implementation of the randomized incremental point location algorithm based on a trapezoidal map, based on the *Computational Geometry: Algorithms and Applications* book written by Mark Berg, Marc Kreveld, Mark Overmars and Otfried Schwarzkopf and on the teachings offered by the *Spatial Databases* course.  
 
 The following repository contains 2 versions of the algorithm:  
- - a version that works under general position + no query point on vertical line of a x-node or on the segment of a y-node (algorithm seen during lectures).
- - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate, as discussed in the reference book *Computational Geometry: Algorithms and Applications*) + it allows query points to be found even on the vertical line of a x-node or on the segment of a y-node (as discussed in the reference book *Computational Geometry: Algorithms and Applications*) 
+ - a version that works under general position + no query points on vertical line of a x-node or on the segment of a y-node (algorithm seen during lectures).
+ - a version that works without the need for the general position premise (meaning we allow multiple endpoints to lie on the same x coordinate, as discussed in the reference book *Computational Geometry: Algorithms and Applications*) + it allows query points to lie even on the vertical line of a x-node or on the segment of a y-node (as discussed in the reference book *Computational Geometry: Algorithms and Applications*) 
 
 # Requirements
 In order for the visualization part of the code to work correctly, you will need to install `matplotlib` and `networkx`. You can install them by using pip as follows:  
