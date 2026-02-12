@@ -730,7 +730,6 @@ class TrapezoidalMap:
 
         dfs(self.root)
 
-        # --- Tree-like layout (minimal addition) ---
         pos = {}
         x_counter = 0
 
@@ -808,7 +807,7 @@ def main():
     #segments = [Segment(Point(-9,9), Point(0,9)), Segment(Point(-9,9), Point(6,5)),Segment(Point(6,5), Point(9,9))]
     segments = [Segment(Point(-9,0), Point(3,-7)), Segment(Point(-9,0), Point(2,7)), Segment(Point(4,7), Point(9,0)), Segment(Point(3,-7), Point(9,0)), Segment(Point(-9,0), Point(9,0))]
     #we randomize them - after all, this is a randomized incremental algorithm
-    #random.shuffle(segments)
+    random.shuffle(segments)
     #we initialize the trapezoidal map
     TMap = TrapezoidalMap(segments, xmin, xmax, ymin, ymax)
     #finally, we insert the segments to create the final trapezoidal map
