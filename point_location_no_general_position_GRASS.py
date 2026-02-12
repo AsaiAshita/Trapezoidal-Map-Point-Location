@@ -285,7 +285,7 @@ class TrapezoidalMap:
                     #Otherwise, we don't need to do anything.
                     #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.
                     if segment.q.x > trapezoids[j].rightp.x:
-                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q)
                         trapezoids.append(trap)
             else:
                 if trapezoids[j].upper_right_neighbour is not None:
@@ -298,7 +298,7 @@ class TrapezoidalMap:
                     #Otherwise, we don't need to do anything.
                     #To see whether we need to do this, we just need to check whether the segment ends inside the current trapezoid or not.                    
                     if segment.q.x > trapezoids[j].rightp.x:
-                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q.x)
+                        trap = self.locate_trapezoid(trapezoids[j].rightp, segment.q)
                         trapezoids.append(trap)
             j += 1
         return trapezoids
@@ -640,7 +640,7 @@ class TrapezoidalMap:
                             # In this case, we have two cases, with different behaviour:
                             # - if we created trapezoids above the original first trapezoid right point, the upper trapezoid is the one that has left neighbours, while the lower one has none
                             # - if we created trapezoids below the original first trapezoid right point, the lower trapezoid is the one that has left neighbours, while the upper one doesn't
-                            if seg.p.x == first_trap.leftp.x and seg.p.y == first_trap.leftp.x or seg.p.x == first_trap.leftp.x and (first_trap.leftp.y != first_trap.bottom.p.y or first_trap.leftp.y != first_trap.top.p.y):
+                            if seg.p.x == first_trap.leftp.x and seg.p.y == first_trap.leftp.y or seg.p.x == first_trap.leftp.x and (first_trap.leftp.y != first_trap.bottom.p.y or first_trap.leftp.y != first_trap.top.p.y):
                                 #segment with endpoint on vertical created by the top or bottom left endpoint - not possible in general position
                                 if first_trap.upper_left_neighbour is not None and first_trap.upper_left_neighbour.top.equals(upper_trapezoid.top):
                                     upper_trapezoid.upper_left_neighbour = first_trap.upper_left_neighbour
