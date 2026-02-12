@@ -840,7 +840,7 @@ class TrapezoidalMap:
 
         def assign_pos(node):
             """
-            The function performs a BFS and assigns to each node its depth in the tree
+            The function performs a DFS and assigns to each node its depth in the tree
             """
             nonlocal x_counter #first time I ever use the nonlocal keyword, and damn if it isn't the right time to do so
             nid = get_id(node)
