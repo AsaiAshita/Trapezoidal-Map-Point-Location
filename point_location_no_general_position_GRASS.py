@@ -1,10 +1,5 @@
 #ASSUMPTION
 #no endpoints on bounding box, may break the algorithm
-#NOTES:
-#Some specific inputs (in particular, when a node with neighbours that do not share its top or bottom and we add a segment that traverses it and one of its neighbours)
-#result in algorithmically and formally correct solutions (in the sense that the algorithm behaves as it should) but that are technically incorrect
-#If you want to see what I mean, modify the segment ((-9,0),(3,0)) with a higher x value for the second point
-#Those cases need to be handled manually and without using the classic neighbour traversing mechanic that general position point location algorithms based on trapezoidla maps use
 
 import random
 import matplotlib.pyplot as plt
@@ -878,7 +873,7 @@ class TrapezoidalMap:
 
         def assign_pos(node):
             """
-            The function performs a BFS and assigns to each node its depth in the tree
+            The function performs a DFS and assigns to each node its depth in the tree
             """
             nonlocal x_counter #first time I ever use the nonlocal keyword, and damn if it isn't the right time to do so
             nid = get_id(node)
